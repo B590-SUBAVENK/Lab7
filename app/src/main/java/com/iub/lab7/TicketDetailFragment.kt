@@ -18,7 +18,7 @@ class TicketDetailFragment : Fragment() {
             "Cannot access the view because it is null."
         }
 
-    private lateinit var ticket: Ticket
+    lateinit var ticket: Ticket
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
