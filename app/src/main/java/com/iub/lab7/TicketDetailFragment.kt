@@ -28,7 +28,8 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
-            isSolved = false
+            isSolved = false,
+            requiresManager = false
         )
     }
 

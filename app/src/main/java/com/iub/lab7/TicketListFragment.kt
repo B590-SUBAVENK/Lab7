@@ -10,21 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iub.lab7.databinding.FragmentTicketListBinding
 
-
 private const val TAG = "TicketListFragment"
 
 class TicketListFragment : Fragment() {
 
     private var _binding: FragmentTicketListBinding? = null
     private val binding
-    get() = checkNotNull(_binding) {
-        "Cannot access binding because it is null."
-    }
+        get() = checkNotNull(_binding) { "Cannot access binding because it is null." }
 
     private val ticketListViewModel: TicketListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         Log.d(TAG, "Total tickets: ${ticketListViewModel.tickets.size}")
     }
 
@@ -37,16 +34,14 @@ class TicketListFragment : Fragment() {
         binding.ticketRecyclerView.layoutManager = LinearLayoutManager(context)
 
         val tickets = ticketListViewModel.tickets
-        val adapter  = TicketListAdapter(tickets)
+        val adapter = TicketListAdapter(tickets)
         binding.ticketRecyclerView.adapter = adapter
 
         return binding.root
     }
 
     override fun onDestroyView() {
-            super.onDestroyView()
+        super.onDestroyView()
         _binding = null
     }
-
-
 }
