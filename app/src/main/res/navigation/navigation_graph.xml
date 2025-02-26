@@ -18,6 +18,10 @@
         android:id="@+id/ticketDetailFragment"
         android:name="com.iub.lab7.TicketDetailFragment"
         android:label="TicketDetailFragment"
-        tools:layout="@layout/fragment_ticket_detail" />
+        tools:layout="@layout/fragment_ticket_detail" >
+        <argument
+            android:name="ticketId"
+            app:argType="java.util.UUID" />
+    </fragment>
 
 </navigation>
