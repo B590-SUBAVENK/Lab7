@@ -2,6 +2,7 @@ package com.iub.lab7.database
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Update
 import com.iub.lab7.Ticket
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
@@ -14,4 +15,7 @@ interface TicketDao {
 
     @Query("SELECT * FROM ticket WHERE id=:id")
     fun getTicket(id: UUID): Flow<Ticket>
+
+    @Update
+    fun updateTicket(ticket: Ticket)
 }
