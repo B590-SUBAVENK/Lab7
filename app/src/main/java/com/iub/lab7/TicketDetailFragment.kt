@@ -15,7 +15,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.iub.lab7.databinding.FragmentTicketDetailBinding
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 private const val TAG = "TicketDetailFragment"
@@ -88,12 +90,14 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
     }
 
     private fun updateUi(ticket: Ticket) {
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM yyyy, HH:mm", Locale.getDefault()) // Example: 26 Feb 2025, 14:30
+
         binding.apply {
             if (ticketTitle.text.toString() != ticket.title) {
                 ticketTitle.setText(ticket.title)
             }
 
-            ticketDate.text = ticket.date.toString()
+            ticketDate.text = dateFormat.format(Date(ticket.date))
             ticketSolved.isChecked = ticket.isSolved
         }
     }

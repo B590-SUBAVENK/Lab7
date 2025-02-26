@@ -7,15 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.iub.lab7.databinding.ListItemTicketBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 class TicketHolder(
     val binding: ListItemTicketBinding,
     val onTicketClicked: (ticketId: UUID) -> Unit
 ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(ticket: Ticket) {
+
+    private val dateFormat = SimpleDateFormat("EEEE, dd MMM yyyy, HH:mm", Locale.getDefault()) // Format
+
+    fun bind(ticket: Ticket) {
             binding.ticketTitle.text = ticket.title
-            binding.ticketDate.text = ticket.date.toString()
+            binding.ticketDate.text = dateFormat.format(Date(ticket.date)) // ✅ Format the epoch date
 
             binding.root.setOnClickListener {
                 onTicketClicked(ticket.id)
