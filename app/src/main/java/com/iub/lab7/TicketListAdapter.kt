@@ -9,17 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iub.lab7.databinding.ListItemTicketBinding
 
 class TicketHolder(
-    val binding: ListItemTicketBinding)
-    : RecyclerView.ViewHolder(binding.root) {
+    val binding: ListItemTicketBinding,
+    val onTicketClicked: () -> Unit
+): RecyclerView.ViewHolder(binding.root) {
         fun bind(ticket: Ticket) {
             binding.ticketTitle.text = ticket.title
             binding.ticketDate.text = ticket.date.toString()
 
             binding.root.setOnClickListener {
-                Toast.makeText(binding.root.context,
-                    "${ticket.title} clicked!",
-                Toast.LENGTH_SHORT)
-                .show()
+                onTicketClicked()
             }
             binding.ticketSolved.visibility = if (ticket.isSolved) {
                 View.VISIBLE
@@ -33,13 +31,14 @@ class TicketHolder(
 
 
 class TicketListAdapter(
-    private val tickets: List<Ticket>
+    private val tickets: List<Ticket>,
+    private val onTicketClicked: () -> Unit
 ) : RecyclerView.Adapter<TicketHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketHolder {
         val inflator = LayoutInflater.from(parent.context)
         val binding = ListItemTicketBinding.inflate(inflator, parent, false)
-        return TicketHolder(binding)
+        return TicketHolder(binding, onTicketClicked)
     }
 
     override fun getItemCount(): Int {
