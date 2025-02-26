@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
 import com.iub.lab7.databinding.ListItemTicketBinding
 
@@ -13,8 +14,8 @@ class TicketHolder(
     : RecyclerView.ViewHolder(binding.root) {
         fun bind(ticket: Ticket) {
             binding.ticketTitle.text = ticket.title
-            binding.ticketDate.text = ticket.date.toString()
-
+            val formattedDate = DateFormat.format("EEEE, MMM dd, yyyy", ticket.date).toString()
+            binding.ticketDate.text = formattedDate
             binding.root.setOnClickListener {
                 Toast.makeText(binding.root.context,
                     "${ticket.title} clicked!",
