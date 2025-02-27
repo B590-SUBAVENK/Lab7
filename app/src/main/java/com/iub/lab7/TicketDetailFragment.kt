@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -24,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.iub.lab7.databinding.FragmentTicketDetailBinding
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,6 +34,7 @@ import java.util.UUID
 private const val TAG = "TicketDetailFragment"
 private const val DATE_FORMAT = "EEE, MMM, dd"
 class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
+    private val photoName: String? =null
     private val args: TicketDetailFragmentArgs by navArgs()
     private val ticketDetailViewModel: TicketDetailViewModel by viewModels {
         TicketDetailViewModelFactory(args.ticketId)
@@ -46,6 +49,16 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
         ActivityResultContracts.PickContact()
     ) { uri: Uri? ->
         uri?.let { parseContactSelection(it)}
+    }
+
+    private val takePhoto = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { didTakePhoto: Boolean ->
+        if (didTakePhoto && photoName != null) {
+            ticketDetailViewModel.updateTicket { oldTicket ->
+                oldTicket.copy(photoFileName = photoName)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -84,6 +97,25 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
                 )
 
                 ticketAssignee.isEnabled = canResolveIntent(selectAssigneeIntent)
+
+                ticketCamera.setOnClickListener {
+                    val photoName = "IMG_${Date()}.JPG"
+                    val photoFile = File(requireContext().applicationContext.filesDir, photoName)
+                    val photoUri = FileProvider.getUriForFile(
+                        requireContext(),
+                        "com.iub.lab7.fileprovider",
+                        photoFile
+                    )
+                    takePhoto.launch(photoUri)
+                }
+
+                val captureImageIntent = takePhoto.contract.createIntent(
+                    requireContext(),
+                    Uri.parse("")
+                )
+
+                ticketCamera.isEnabled = canResolveIntent(captureImageIntent)
+
 
             }
 
