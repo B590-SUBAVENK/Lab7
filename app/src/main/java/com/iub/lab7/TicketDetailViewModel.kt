@@ -49,9 +49,6 @@ class TicketDetailViewModel(ticketId: UUID?) : ViewModel() {
                 ticketRepository.addTicket(it)
             }
         }
-//        viewModelScope.launch {
-//            _ticket.value?.let { ticketRepository.updateTicket(it) }
-//        }
     }
 
 }
