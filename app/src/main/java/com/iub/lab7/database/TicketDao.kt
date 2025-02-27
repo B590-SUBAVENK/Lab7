@@ -1,6 +1,7 @@
 package com.iub.lab7.database
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.iub.lab7.Ticket
@@ -18,4 +19,7 @@ interface TicketDao {
 
     @Update
     fun updateTicket(ticket: Ticket)
+
+    @Insert
+    fun addTicket(ticket: Ticket)
 }
