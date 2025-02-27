@@ -22,8 +22,9 @@ class TicketHolder(
     fun bind(ticket: Ticket) {
             binding.ticketTitle.text = ticket.title
             binding.ticketDate.text = dateFormat.format(Date(ticket.date))
+            binding.ticketTime.text = ticket.time
 
-            binding.root.setOnClickListener {
+        binding.root.setOnClickListener {
                 onTicketClicked(ticket.id)
             }
             binding.ticketSolved.visibility = if (ticket.isSolved) {

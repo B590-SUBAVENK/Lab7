@@ -84,6 +84,11 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
         ) { _, bundle ->
             val selectedTime = bundle.getString(TimePickerFragment.BUNDLE_KEY_TIME)
             binding.ticketTime.text = selectedTime // Update UI
+
+            // Update ticket with selected time
+            ticketDetailViewModel.updateTicket { oldTicket ->
+                oldTicket.copy(time = selectedTime ?: "")
+            }
         }
     }
 
