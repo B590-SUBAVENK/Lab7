@@ -46,6 +46,18 @@ class TicketDetailFragment : Fragment(R.layout.fragment_ticket_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.inflateMenu(R.menu.fragment_ticket_detail)
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.delete_ticket -> {
+                    ticketDetailViewModel.deleteTicket()
+                    findNavController().navigateUp() // Navigate back after deletion
+                    true
+                }
+                else -> false
+            }
+        }
 
         binding.apply {
             binding.apply {

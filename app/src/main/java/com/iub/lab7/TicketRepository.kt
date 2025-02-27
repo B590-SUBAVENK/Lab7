@@ -21,19 +21,29 @@ class TicketRepository private constructor(
         .build()
 
     fun getTickets(): Flow<List<Ticket>> = database.ticketDao().getTickets()
+
     fun getTicket(id: UUID): Flow<Ticket> = database.ticketDao().getTicket(id)
+
     fun updateTicket(ticket: Ticket)
     {
         coroutineScope.launch {
             database.ticketDao().updateTicket(ticket)
         }
     }
+
     fun addTicket(ticket: Ticket)
     {
         coroutineScope.launch {
             database.ticketDao().addTicket(ticket)
         }
     }
+
+    fun deleteTicket(ticket: Ticket) {
+        coroutineScope.launch {
+            database.ticketDao().deleteTicket(ticket)
+        }
+    }
+
     companion object {
         private var INSTANCE: TicketRepository? = null
 
